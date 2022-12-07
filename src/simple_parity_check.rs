@@ -1,31 +1,26 @@
 use crate::{Bit, Block};
 
 pub fn encode(dataword: &Block) -> Block {
-    let mut bits = dataword.peek().clone();
+    let mut bits = dataword.to_num();
     // Generate a parity bit and append it.
-    bits.push(pbit_syndrome(dataword.peek()));
+    let parity_bit = pbit_syndrome(bits) as u32;
+    bits = (bits << 1) + parity_bit;
 
-    Block(bits)
+    Block::from_num(bits)
 }
 
 // Calculating syndrome and parity bit has the same algorithm
-pub fn pbit_syndrome(block: &[Bit]) -> Bit {
-    //(block.iter().sum::<u8>() % 2 != 0) as Bit
-    let mut result = 0;
-    for bit in block {
-        result ^= bit;
-    }
-
-    result
+pub fn pbit_syndrome(bits: u32) -> Bit {
+    (bits.count_ones() % 2 != 0) as Bit
 }
 
 pub fn decode(codeword: &Block) -> Option<Block> {
-    if pbit_syndrome(codeword.peek()) == 0 {
-        let mut bits = codeword.peek().clone();
+    if pbit_syndrome(codeword.to_num()) == 0 {
+        let mut bits = codeword.to_num();
         // Get rid of the parity bit
-        bits.pop();
+        bits >>= 1;
 
-        Some(Block(bits))
+        Some(Block::from_num(bits))
     } else {
         None
     }
