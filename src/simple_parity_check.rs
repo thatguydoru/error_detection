@@ -9,8 +9,14 @@ pub fn encode(dataword: &Block) -> Block {
 }
 
 // Calculating syndrome and parity bit has the same algorithm
-pub fn pbit_syndrome(dataword: &[Bit]) -> Bit {
-    (dataword.iter().sum::<u8>() % 2 != 0) as Bit
+pub fn pbit_syndrome(block: &[Bit]) -> Bit {
+    //(block.iter().sum::<u8>() % 2 != 0) as Bit
+    let mut result = 0;
+    for bit in block {
+        result ^= bit;
+    }
+
+    result
 }
 
 pub fn decode(codeword: &Block) -> Option<Block> {

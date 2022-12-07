@@ -1,13 +1,5 @@
 use crate::{simple_parity_check::pbit_syndrome, Bit, Block};
 
-pub fn parse(data: &str) -> Vec<Block> {
-    // Data looks like this:
-    // 101100111 101010111 010110100 110101011 100101111
-    // Need to turn it to this:
-    // vec[Codeword(101100111), Codeword(101010111), ..., Codeword(100101111)]
-    data.split_whitespace().map(Block::new).collect()
-}
-
 pub fn count_error(data: Vec<Block>) -> u32 {
     // Initialize column vec
     let mut columns: Vec<Vec<Bit>> = vec![];

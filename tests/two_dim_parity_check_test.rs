@@ -1,21 +1,4 @@
-use error_detection::{
-    two_dim_parity_check::{count_error, parse},
-    Block,
-};
-
-#[test]
-fn parse_success() {
-    let data = "101100111 101010111 010110100 110101011 100101111";
-    let cmp = vec![
-        Block::new("101100111"),
-        Block::new("101010111"),
-        Block::new("010110100"),
-        Block::new("110101011"),
-        Block::new("100101111"),
-    ];
-
-    assert!(cmp.eq(&parse(data)));
-}
+use error_detection::{two_dim_parity_check::count_error, Block};
 
 #[test]
 fn no_errors() {
