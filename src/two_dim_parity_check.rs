@@ -15,8 +15,7 @@ pub fn count_error(data: Vec<Block>) -> u32 {
         columns.push(vec![*bit]);
     }
 
-    // Skip first codeword as it is in the vec already,
-    // then push bit to its respective column
+    // Push rest of the bits to their respective columns
     for cword in data.iter().skip(1) {
         for (col, bit) in cword.peek().iter().enumerate() {
             columns[col].push(*bit);
@@ -41,7 +40,7 @@ pub fn count_error(data: Vec<Block>) -> u32 {
     //   column can't if the number of overlapping errors are even.
     // - The same goes for column when errors overlap with respect to the rows.
     // - If errors are spread out, such that there are no overlapping indexes,
-    //   then all those errors are detected.
-    // TODO: Proof?
+    //   then all those errors are detected. If columns > rows, then the columns
+    //   will reflect the number of errors detected. The same goes vice versa.
     rows_syndrome.max(column_syndrome)
 }
