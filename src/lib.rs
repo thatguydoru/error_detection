@@ -44,12 +44,10 @@ impl Block {
     }
 
     pub fn to_num(&self) -> u32 {
-        let mut data = self.0.clone();
-        data.reverse();
         let mut multiplier = 1;
         let mut sum = 0;
 
-        for bit in data.iter() {
+        for bit in self.0.iter().rev() {
             sum += *bit as u32 * multiplier;
             multiplier *= 2;
         }
