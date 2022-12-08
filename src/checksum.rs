@@ -14,11 +14,7 @@ fn ones_complement_add(a: &Block, b: &Block) -> Block {
 }
 
 fn complement(block: &Block) -> Block {
-    let complement = block
-        .peek()
-        .iter()
-        .map(|bit| u8::from(*bit == 0))
-        .collect();
+    let complement = block.peek().iter().map(|bit| u8::from(*bit == 0)).collect();
 
     Block::from_vec(complement)
 }
