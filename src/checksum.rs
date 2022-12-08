@@ -41,7 +41,7 @@ pub fn checksum_decision(stream: &[Block]) -> &'static str {
 
 #[cfg(test)]
 mod helper_tests {
-    use crate::{checksum::{ones_complement_add, checksum_decision}, Block};
+    use crate::{checksum::ones_complement_add, Block};
 
     #[test]
     fn ones_complement_test() {
@@ -49,18 +49,5 @@ mod helper_tests {
         let b = Block::from_string("11100010");
 
         assert_eq!(ones_complement_add(&a, &b), Block::from_string("01111100"));
-    }
-
-    #[test]
-    fn checksum_test() {
-        let data = vec![
-            Block::from_string("10011001"),
-            Block::from_string("11100010"),
-            Block::from_string("00100100"),
-            Block::from_string("10000100"),
-            Block::from_string("11011010"),
-        ];
-
-        assert_eq!("Accept data", checksum_decision(&data));
     }
 }
