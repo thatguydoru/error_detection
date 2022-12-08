@@ -19,8 +19,9 @@ fn cword_to_vec_bytes() {
 #[test]
 fn from_num_test() {
     let block = Block::from_string("11111110");
+    let len = block.peek().len();
 
-    assert_eq!(Block::from_num(254), block);
+    assert_eq!(Block::from_num_with_size(254, len), block);
 }
 
 #[test]

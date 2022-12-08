@@ -1,29 +1,66 @@
-use crate::{Bit, Block};
+use crate::Block;
 
-fn add_bits(a: Bit, b: Bit) -> (Bit, Bit) {
-    let sum = a ^ b;
-    let carry = a & b;
+fn ones_complement_add(a: &Block, b: &Block) -> Block {
+    let a = a.to_num() as u8;
+    let b = b.to_num() as u8;
 
-    (sum, carry)
+    let (mut sum, mut carry) = a.overflowing_add(b);
+
+    while carry {
+        (sum, carry) = sum.overflowing_add(carry as u8);
+    }
+
+    Block::from_num_with_size(sum as u32, 8)
 }
 
-fn add_blocks(a_block: &Block, b_block: &Block) -> (u32, u32) {
-    let a = a_block.to_num();
-    let b = b_block.to_num();
+fn complement(block: &Block) -> Block {
+    let complement = block
+        .peek()
+        .iter()
+        .map(|bit| u8::from(*bit == 0))
+        .collect();
 
+    Block::from_vec(complement)
+}
 
-    todo!()
+pub fn checksum_decision(stream: &[Block]) -> &'static str {
+    let mut sum = Block::from_string("0");
+
+    for block in stream {
+        sum = ones_complement_add(&sum, block);
+    }
+
+    let complement = complement(&sum);
+
+    if complement.to_num() == 0 {
+        "Accept data"
+    } else {
+        "Checksum error detected"
+    }
 }
 
 #[cfg(test)]
 mod helper_tests {
-    use crate::{checksum::add_blocks, Block};
+    use crate::{checksum::{ones_complement_add, checksum_decision}, Block};
 
     #[test]
-    fn add_blocks_test() {
-        let a = Block::from_string("11");
-        let b = Block::from_string("01");
+    fn ones_complement_test() {
+        let a = Block::from_string("10011001");
+        let b = Block::from_string("11100010");
 
-        assert_eq!((0b0_u32, 0b1_u32), add_blocks(&a, &b));
+        assert_eq!(ones_complement_add(&a, &b), Block::from_string("01111100"));
+    }
+
+    #[test]
+    fn checksum_test() {
+        let data = vec![
+            Block::from_string("10011001"),
+            Block::from_string("11100010"),
+            Block::from_string("00100100"),
+            Block::from_string("10000100"),
+            Block::from_string("11011010"),
+        ];
+
+        assert_eq!("Accept data", checksum_decision(&data));
     }
 }

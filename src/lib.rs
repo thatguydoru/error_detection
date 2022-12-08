@@ -23,12 +23,27 @@ impl Block {
     }
 
     pub fn from_num(num: u32) -> Self {
-        let mut num = num;
+        let mut quotient = num;
         let mut bits = vec![];
 
-        while num > 0 {
-            bits.push((num % 2) as Bit);
-            num /= 2;
+        while quotient > 0 {
+            bits.push((quotient % 2) as Bit);
+            quotient /= 2;
+        }
+        bits.reverse();
+
+        Self(bits)
+    }
+
+    pub fn from_num_with_size(num: u32, len: usize) -> Self {
+        let mut quotient = num;
+        let mut bits = vec![0; len];
+
+        let mut index = 0;
+        while quotient > 0 {
+            bits[index] = (quotient % 2) as Bit;
+            quotient /= 2;
+            index += 1;
         }
         bits.reverse();
 
@@ -56,10 +71,10 @@ impl Block {
     }
 }
 
-pub fn parse(data: &str) -> Vec<Block> {
-    // Data looks like this:
+pub fn parse(stream: &str) -> Vec<Block> {
+    // Stream looks like this:
     // 101100111 101010111 010110100 110101011 100101111
     // Need to turn it to this:
     // vec[Block(101100111), Block(101010111), ..., Block(100101111)]
-    data.split_whitespace().map(Block::from_string).collect()
+    stream.split_whitespace().map(Block::from_string).collect()
 }
