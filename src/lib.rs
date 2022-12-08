@@ -1,6 +1,7 @@
 pub mod simple_parity_check;
 pub mod two_dim_parity_check;
 pub mod checksum;
+pub mod cyclic_reduncancy_check;
 
 pub type Bit = u8;
 

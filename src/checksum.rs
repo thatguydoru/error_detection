@@ -23,7 +23,7 @@ fn complement(block: &Block) -> Block {
     Block::from_vec(complement)
 }
 
-pub fn checksum_decision(stream: &[Block]) -> &'static str {
+pub fn checksum_decision<'a>(stream: &[Block]) -> &'a str {
     let mut sum = Block::from_string("0");
 
     for block in stream {
