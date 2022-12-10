@@ -1,4 +1,4 @@
-use error_detection::{checksum::checksum_decision, Block};
+use error_detection::{checksum::checksum_check, Block};
 
 #[test]
 fn checksum_fail() {
@@ -10,7 +10,7 @@ fn checksum_fail() {
         Block::from_string("11011010"),
     ];
 
-    assert_eq!("Checksum error detected", checksum_decision(&data));
+    assert_eq!("Checksum error detected", checksum_check(&data));
 }
 
 #[test]
@@ -23,7 +23,7 @@ fn checksum_pre_test() {
         Block::from_string("11011010"),
     ];
 
-    assert_eq!("Accept data", checksum_decision(&data));
+    assert_eq!("Accept data", checksum_check(&data));
 }
 
 #[test]
@@ -37,5 +37,5 @@ fn checksum_post_test() {
         Block::from_string("11011010"),
     ];
 
-    assert_eq!("Accept data", checksum_decision(&data));
+    assert_eq!("Accept data", checksum_check(&data));
 }

@@ -1,5 +1,7 @@
 use crate::Block;
 
+const MAX_BITS: usize = 8;
+
 fn ones_complement_add(a: &Block, b: &Block) -> Block {
     let a = a.to_num() as u8;
     let b = b.to_num() as u8;
@@ -10,7 +12,7 @@ fn ones_complement_add(a: &Block, b: &Block) -> Block {
         (sum, carry) = sum.overflowing_add(carry as u8);
     }
 
-    Block::from_num_with_size(sum as u32, 8)
+    Block::from_num_with_size(sum as u32, MAX_BITS)
 }
 
 fn complement(block: &Block) -> Block {
@@ -19,7 +21,7 @@ fn complement(block: &Block) -> Block {
     Block::from_vec(complement)
 }
 
-pub fn checksum_decision<'a>(stream: &[Block]) -> &'a str {
+pub fn checksum_check<'a>(stream: &[Block]) -> &'a str {
     let mut sum = Block::from_string("0");
 
     for block in stream {

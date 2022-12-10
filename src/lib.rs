@@ -1,7 +1,7 @@
 pub mod simple_parity_check;
 pub mod two_dim_parity_check;
 pub mod checksum;
-pub mod cyclic_reduncancy_check;
+pub mod crc;
 
 pub type Bit = u8;
 
@@ -20,7 +20,7 @@ impl Block {
     }
 
     pub fn from_vec(bits: Vec<Bit>) -> Self {
-        Block(bits)
+        Self(bits)
     }
 
     pub fn from_num(num: u32) -> Self {
