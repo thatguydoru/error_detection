@@ -1,6 +1,6 @@
 use std::{env, process::exit};
 
-use error_detection::{simple_parity_check, Block, two_dim_parity_check, checksum, crc};
+use error_detection::{checksum, crc, simple_parity_check, two_dim_parity_check, Block};
 
 fn main() {
     let args = env::args().into_iter().skip(1).collect::<Vec<String>>();
