@@ -19,5 +19,4 @@ cargo run -- <command>
 
 - Cyclic Redundancy Check:
     crc "data"
-"
 ```
