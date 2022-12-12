@@ -1,13 +1,22 @@
-pub mod simple_parity_check;
-pub mod two_dim_parity_check;
 pub mod checksum;
 pub mod crc;
+pub mod simple_parity_check;
+pub mod two_dim_parity_check;
+
+use std::fmt::{self, Display};
 
 pub type Bit = u8;
 
 // Dataword and Codeword are Block of data
 #[derive(Debug, PartialEq, Eq)]
 pub struct Block(Vec<Bit>);
+
+impl Display for Block {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let block = self.0.iter().map(|bit| bit.to_string()).collect::<String>();
+        write!(f, "{}", block)
+    }
+}
 
 impl Block {
     pub fn from_string(block: &str) -> Self {

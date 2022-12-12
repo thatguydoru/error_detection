@@ -1,6 +1,6 @@
 use crate::{simple_parity_check::pbit_syndrome, Block};
 
-pub fn count_error(datablocks: Vec<Block>) -> u32 {
+pub fn count_error(datablocks: &[Block]) -> u32 {
     // Calculate the syndrome in integer form of each column
     // by bitXOR-ing the codewords.
     let column_syndrome_int = 0;
@@ -20,7 +20,7 @@ pub fn count_error(datablocks: Vec<Block>) -> u32 {
         .sum::<u32>();
 
     let rows_syndrome = datablocks
-        .into_iter()
+        .iter()
         .map(|cword| pbit_syndrome(cword.to_num()) as u32)
         .sum::<u32>();
 
