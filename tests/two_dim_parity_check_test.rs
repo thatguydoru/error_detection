@@ -10,7 +10,7 @@ fn no_errors() {
         Block::from_string("100101111"),
     ];
 
-    assert_eq!(0, count_error(parsed_data))
+    assert_eq!(0, count_error(&parsed_data))
 }
 
 #[test]
@@ -24,7 +24,7 @@ fn one_error() {
         Block::from_string("100101111"),
     ];
 
-    assert_eq!(1, count_error(parsed_data))
+    assert_eq!(1, count_error(&parsed_data))
 }
 
 #[test]
@@ -38,7 +38,7 @@ fn two_errors() {
         Block::from_string("100101111"),
     ];
 
-    assert_eq!(2, count_error(parsed_data))
+    assert_eq!(2, count_error(&parsed_data))
 }
 
 #[test]
@@ -52,7 +52,7 @@ fn edge_case_three_errors() {
         Block::from_string("100101111"),
     ];
 
-    assert_eq!(1, count_error(parsed_data))
+    assert_eq!(1, count_error(&parsed_data))
 }
 
 #[test]
@@ -66,7 +66,7 @@ fn four_errors() {
         Block::from_string("100101111"),
     ];
 
-    assert_eq!(0, count_error(parsed_data))
+    assert_eq!(0, count_error(&parsed_data))
 }
 
 #[test]
@@ -78,5 +78,5 @@ fn small_data() {
         Block::from_string("11011"),
     ];
 
-    assert_eq!(0, count_error(data));
+    assert_eq!(0, count_error(&data));
 }
