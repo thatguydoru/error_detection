@@ -1,13 +1,13 @@
-use std::{env, process::exit};
+use std::{env, process};
 
 use error_detection::{checksum, crc, simple_parity_check, two_dim_parity_check, Block};
 
 fn main() {
     let args = env::args().into_iter().skip(1).collect::<Vec<String>>();
 
-    if args.is_empty() || args.len() >= 2 {
+    if args.is_empty() || args.len() < 2 {
         print_help();
-        exit(0);
+        process::exit(0);
     }
 
     let mode = &args[0];
@@ -22,6 +22,16 @@ fn main() {
     } else if mode == "crc" {
         crc(&inputs[0]);
     }
+}
+
+fn check_length(length: usize, stream: &[Block]) -> bool {
+    for block in stream.iter() {
+        if block.peek().len() != length {
+            return false;
+        }
+    }
+
+    true
 }
 
 fn spc(inputs: &[String]) {
@@ -41,16 +51,30 @@ fn spc(inputs: &[String]) {
 }
 
 fn tpc(stream: &str) {
+    let length: usize = 9;
     let stream = error_detection::parse(stream);
-    let error_count = two_dim_parity_check::count_error(&stream);
 
+    // Check if the datablocks have the required length
+    if !check_length(length, &stream) {
+        println!("Datawords must have the same length");
+        return;
+    }
+
+    let error_count = two_dim_parity_check::count_error(&stream);
     println!("Error count: {}", error_count);
 }
 
 fn checksum(stream: &str) {
+    let length: usize = 8;
     let stream = error_detection::parse(stream);
-    let decision = checksum::checksum_check(&stream);
 
+    // Check if the datablocks have the required length
+    if !check_length(length, &stream) {
+        println!("Datawords must have the same length");
+        return;
+    }
+
+    let decision = checksum::checksum_check(&stream);
     println!("{decision}");
 }
 

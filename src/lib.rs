@@ -45,9 +45,9 @@ impl Block {
         Self(bits)
     }
 
-    pub fn from_num_with_size(num: u32, len: usize) -> Self {
+    pub fn from_num_with_size(num: u32, size: usize) -> Self {
         let mut quotient = num;
-        let mut bits = vec![0; len];
+        let mut bits = vec![0; size];
 
         let mut index = 0;
         while quotient > 0 {
