@@ -1,6 +1,5 @@
 use crate::{simple_parity_check::pbit_syndrome, Block};
 
-
 pub fn count_error(datablocks: &[Block]) -> u32 {
     // Calculate the syndrome in integer form of each column
     // by bitXOR-ing the codewords.
