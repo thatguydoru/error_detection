@@ -1,3 +1,4 @@
-/target
-/Cargo.lock
-/erdet
+target
+Cargo.lock
+erdet
+erdet.zip

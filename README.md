@@ -1,4 +1,4 @@
-# Laboratory Exercise 6: Error Detection
+# Laboratory Exercise 7: Error Detection
 These are my solutions for this exercise.
 
 To compile and run, do:
